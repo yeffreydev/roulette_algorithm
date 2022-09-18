@@ -1,0 +1,23 @@
+@api = http://localhost:4000
+
+###create number
+POST {{api}}/api/numbers
+Content-Type: application/json 
+
+{
+    "number":  10
+}
+
+###get numbers
+GET {{api}}/api/numbers
+
+###update numbers
+PUT {{api}}/api/numbers
+Content-Type: application/json
+
+{
+    "number": 20
+}
+
+###delete numbers
+DELETE  {{api}}/api/numbers

@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --white: #f0f;
+}
+#app {
+  background-color: #123;
+  width: 100vw;
+  height: 100vh;
+}
+header {
+  width: 100%;
+  background-color: #012;
+  height: 50px;
+  color: #def;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .logo {
+  margin-left: 50px;
+}
+header nav {
+  margin-right: 50px;
+  list-style: none;
+}
+nav li a {
+  text-decoration: none;
+  color: #def;
+  border-bottom: 1px solid #7ff;
+  padding: 2px 10px;
+}
+.main {
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+.section {
+  width: 80%;
+  margin: auto;
+  background-color: #3452;
+  padding: 10px;
+}
+.section::-webkit-scrollbar {
+}
+
+/* roulette  */
+.roulette-container {
+  margin-top: 10px;
+}
+.roulette {
+  margin-top: 10px;
+  min-width: 350px;
+  width: 350px;
+  min-height: 350px;
+}
+.roulette-header {
+  display: flex;
+  justify-content: space-between;
+}
+.button-view,
+#submit-number {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #345;
+  font-weight: bold;
+  color: #fef;
+}
+/* roulette form  */
+.form-number {
+  display: flex;
+  align-items: flex-start;
+}
+.form-number .form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-number .form-group input {
+  padding: 5px 0;
+}
+.input-error {
+  margin-top: 2px;
+  color: red;
+  height: 13px;
+  font-size: 13px;
+}
+#submit-number {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.ball {
+  animation: second-animation 2s 2s infinite alternate ease-in-out forwards;
+}
+
+@keyframes second-animation {
+  0% {
+    fill: blue;
+    transform: translateX(0);
+  }
+  50% {
+    fill: red;
+    transform: translateX(50px);
+  }
+  100% {
+    fill: purple;
+    transform: translateX(100px);
+  }
+}
