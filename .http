@@ -5,7 +5,7 @@ POST {{api}}/api/numbers
 Content-Type: application/json 
 
 {
-    "number":  10
+    "number":  20
 }
 
 ###get numbers

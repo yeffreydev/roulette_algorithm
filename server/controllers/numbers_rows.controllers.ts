@@ -10,12 +10,17 @@ const createNumbersRows: RequestHandler = function (req, res, next) {
         res.status(200);
         return res.send("created successfull");
       }
+      console.log(e);
       res.status(500);
       return res.send("error creating number");
     });
   } catch (e) {
     res.status(500);
-    res.send({ Error: "Server error" });
+    res.send({
+      Error: `[number_rows.controllers]: ${
+        typeof e == "object" ? JSON.stringify(e) : e
+      }`,
+    });
   }
 };
 
