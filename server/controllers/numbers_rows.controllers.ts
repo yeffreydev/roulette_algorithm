@@ -24,6 +24,24 @@ const createNumbersRows: RequestHandler = function (req, res, next) {
   }
 };
 
+//@TODO read number by id
+const readNumberById: RequestHandler = function (req, res, next) {
+  let id = req.params.numberId;
+  try {
+    numbersRows.readNumberById(id, (err, number) => {
+      if (!err && number) {
+        res.status(200);
+        return res.json(number);
+      }
+      res.status(404);
+      res.send("number not found");
+    });
+  } catch (e) {
+    res.status(501);
+    res.send({ Error: "server error read number" });
+  }
+};
+
 //@TODO read numbers
 const readNumbersRows: RequestHandler = function (req, res, next) {
   try {
@@ -43,29 +61,34 @@ const readNumbersRows: RequestHandler = function (req, res, next) {
 
 //@TODO update numbers
 const updateNumbersRows: RequestHandler = function (req, res, next) {
+  let id = req.params.numberId;
   try {
     let number = req.body;
-    numbersRows.updateNumbers(number, (e) => {
+    numbersRows.updateNumbers(id, number, (e) => {
       if (e) {
-        res.status(501);
-        return res.send("Error updating number");
+        res.status(404);
+        return res.send("not found number for update");
       }
       res.status(200);
       return res.send("number updating successfull");
     });
   } catch (e) {
     res.status(501);
-    return res.send("Server error");
+    return res.send("error updating number[server error]");
   }
 };
 
 //@TODO deleting numbers
 const deleteNumbersRows: RequestHandler = function (req, res, next) {
+  let id = req.params.numberId;
   try {
-    numbersRows.deleteNumbers((e) => {
+    numbersRows.deleteNumberById(id, (e) => {
       if (!e) {
         res.status(200);
         return res.send("number deleting successfull");
+      } else {
+        res.status(404);
+        return res.send("not found number for delete");
       }
     });
   } catch (e) {
@@ -75,6 +98,7 @@ const deleteNumbersRows: RequestHandler = function (req, res, next) {
 };
 //object
 const numbersRowsControllers = {
+  readNumberById,
   createNumbersRows,
   readNumbersRows,
   updateNumbersRows,

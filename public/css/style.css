@@ -95,6 +95,11 @@ nav li a {
   animation: second-animation 2s 2s infinite alternate ease-in-out forwards;
 }
 
+.roulette-body {
+  background-color: #345;
+  padding: 5px;
+  position: relative;
+}
 @keyframes second-animation {
   0% {
     fill: blue;
@@ -108,4 +113,28 @@ nav li a {
     fill: purple;
     transform: translateX(100px);
   }
+}
+
+/* view results  */
+
+.view-results {
+  display: block;
+  border: 2px solid red;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: absolute;
+  background-color: #234;
+}
+.view-results.view-results_none {
+  display: none;
+}
+
+.view-results span {
+  color: white;
+  font-weight: bolder;
+  padding: 5px 10px;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid white;
 }

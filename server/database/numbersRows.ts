@@ -1,4 +1,5 @@
 import storage from "../lib/storage";
+import { NumberI } from "../types/Number";
 import { NumbersRowsI } from "../types/NumbersRows";
 
 const dirName: string = "numbers_rows";
@@ -55,6 +56,23 @@ const createNumbers = function (
   });
 };
 
+//read number
+const readNumberById = function (
+  id: string | number,
+  cb: (err: string | boolean, data: NumberI | null) => void
+) {
+  storage.readFile(dirName, fileName, (err, data: NumberI[]) => {
+    if (err) return cb("Error reading fileName ", null);
+    if (data) {
+      let numberFound = data.find((item) => item.id == id);
+      if (!numberFound) return cb("Not found number", null);
+      cb(false, numberFound);
+    } else {
+      cb("Not data Found in file", null);
+    }
+  });
+};
+
 //read numbers
 const readNumbers = function (cb: (err: string | boolean, data: any) => void) {
   storage.readFile(dirName, fileName, (err, data) => {
@@ -64,27 +82,60 @@ const readNumbers = function (cb: (err: string | boolean, data: any) => void) {
 };
 
 const updateNumbers = function (
-  data: any,
+  id: string | number,
+  data: NumberI,
   cb: (err: string | boolean) => void
 ) {
-  storage.updateFile(dirName, fileName, data, (err) => {
-    if (err) return cb(err);
-    cb(false);
+  storage.readFile(dirName, fileName, (err, numbers: NumberI[]) => {
+    let foundNumber = numbers.find((item) => item.id == id);
+    if (!foundNumber)
+      return cb("not found number for update: [Error]; numbersRows");
+    if (!err && numbers) {
+      let updatedNumbers = numbers.map((item) => {
+        if (item.id == id) {
+          item = { id: item.id, ...data };
+        }
+        return item;
+      });
+      storage.updateFile(dirName, fileName, updatedNumbers, (err) => {
+        if (err) return cb(err);
+        cb(false);
+      });
+    } else {
+      return cb("Error readin numbers, updating numbers on numberRows [error]");
+    }
   });
 };
 
-const deleteNumbers = function (cb: (err: string | boolean) => void) {
-  storage.deleteFile(dirName, fileName, (err) => {
-    if (err) cb(err);
-    cb(false);
+const deleteNumberById = function (
+  id: string | number,
+  cb: (err: string | boolean) => void
+) {
+  storage.readFile(dirName, fileName, (err, numbers: NumberI[]) => {
+    if (!err && numbers) {
+      let numberFound = numbers.find((item) => item.id == id);
+      if (!numberFound) {
+        return cb("Not found number for update database");
+      }
+      let deleteNumber = numbers.filter((item) => item.id != id);
+      storage.updateFile(dirName, fileName, deleteNumber, (err) => {
+        if (!err) {
+          return cb(false);
+        }
+        return cb("Error updating file for delete a number");
+      });
+    } else {
+      cb("Error readin numbers for delete a number [error] numbersRows");
+    }
   });
 };
 
 const numbersRows: NumbersRowsI = {
+  readNumberById,
   createNumbers,
   readNumbers,
   updateNumbers,
-  deleteNumbers,
+  deleteNumberById,
 };
 
 export default numbersRows;

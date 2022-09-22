@@ -13,12 +13,21 @@ numbersRowsRoutes.post(
 //read route
 numbersRowsRoutes.get("/api/numbers", numbersRowsControllers.readNumbersRows);
 
+//read number route
+numbersRowsRoutes.get(
+  "/api/numbers/:numberId",
+  numbersRowsControllers.readNumberById
+);
+
 //update route
-numbersRowsRoutes.put("/api/numbers", numbersRowsControllers.updateNumbersRows);
+numbersRowsRoutes.put(
+  "/api/numbers/:numberId",
+  numbersRowsControllers.updateNumbersRows
+);
 
 //delete route
 numbersRowsRoutes.delete(
-  "/api/numbers",
+  "/api/numbers/:numberId",
   numbersRowsControllers.deleteNumbersRows
 );
 

@@ -8,16 +8,19 @@ Content-Type: application/json
     "number":  20
 }
 
+###get number by id
+GET {{api}}/api/numbers/5 HTTP/1.1
+
 ###get numbers
-GET {{api}}/api/numbers
+GET {{api}}/api/numbers/
 
 ###update numbers
-PUT {{api}}/api/numbers
+PUT {{api}}/api/numbers/2
 Content-Type: application/json
 
 {
-    "number": 20
+    "number": 12
 }
 
 ###delete numbers
-DELETE  {{api}}/api/numbers
+DELETE  {{api}}/api/numbers/5

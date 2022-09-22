@@ -27,6 +27,9 @@
                 <div class="form-group">
                   <input
                     type="number"
+                    min="0"
+                    maxlength="2"
+                    max="36"
                     autocomplete="off"
                     placeholder="...numbers, 0, 1, 2, ...36"
                     type="text"
@@ -38,7 +41,10 @@
               </form>
               <button class="button-view">view</button>
             </div>
-            <div class="roulette"></div>
+            <div class="roulette-body">
+              <div class="view-results view-results_none"></div>
+              <div class="roulette"></div>
+            </div>
             <div class="history"></div>
           </div>
         </div>

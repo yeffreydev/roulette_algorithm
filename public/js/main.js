@@ -1,6 +1,33 @@
 import helpers from "./modules/helpers.js";
+import apiNumber from "./api.js";
+
+//insert a specific position
+
+Element.prototype.insertChildAtIndex = function (child, index) {
+  if (!index) index = 0;
+  if (index >= this.children.length) {
+    this.appendChild(child);
+  } else {
+    this.insertBefore(child, this.children[index]);
+  }
+};
 
 const roulette = document.querySelector(".roulette");
+const viewResults = document.querySelector(".view-results");
+const viewButton = document.querySelector(".button-view");
+
+let viewState = false;
+//ocult view
+viewButton.addEventListener("click", (e) => {
+  if (viewState) {
+    viewButton.textContent = "view";
+    viewResults.className = "view-results view-results_none";
+  } else {
+    viewButton.textContent = "don't show";
+    viewResults.className = "view-results";
+  }
+  viewState = !viewState;
+});
 let svgP = {};
 svgP.width = 300;
 svgP.height = 300;
@@ -104,7 +131,7 @@ numberInput.addEventListener("input", (e) => {
     : (textErrorNumber.textContent = "");
 });
 
-buttonSubmitNumber.addEventListener("submit", (e) => {
+buttonSubmitNumber.addEventListener("submit", async (e) => {
   e.preventDefault();
   let n = !numberInput.value ? false : Number(numberInput.value);
 
@@ -123,7 +150,27 @@ buttonSubmitNumber.addEventListener("submit", (e) => {
     return 0;
   }
   //save number
-  savedNumbers.push(numbeToSave);
-  console.log(savedNumbers);
+  const res = await apiNumber.createNumber(numbeToSave);
+  console.log(res);
+  if (res.status == 200) {
+    savedNumbers.push(numbeToSave);
+    let span = document.createElement("span");
+    let txt = document.createTextNode(numbeToSave);
+    span.appendChild(txt);
+    viewResults.insertBefore(span, viewResults.children[0]);
+  }
   numberInput.value = "";
 });
+
+(async () => {
+  let res = await apiNumber.getAllNumbers();
+  console.log(res);
+  if (res.status == 200) {
+    res.data.reverse().map((item) => {
+      let span = document.createElement("span");
+      let text = document.createTextNode(item.number);
+      span.appendChild(text);
+      viewResults.appendChild(span);
+    });
+  }
+})();
