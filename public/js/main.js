@@ -1,5 +1,6 @@
 import helpers from "./modules/helpers.js";
 import apiNumber from "./api.js";
+import containerAlg from "./components.js";
 
 //insert a specific position
 
@@ -14,7 +15,9 @@ Element.prototype.insertChildAtIndex = function (child, index) {
 
 const roulette = document.querySelector(".roulette");
 const viewResults = document.querySelector(".view-results");
+const historyRoulette = document.querySelector(".history-roulette");
 const viewButton = document.querySelector(".button-view");
+const algsContainer = document.querySelector(".alg-results");
 
 let viewState = false;
 //ocult view
@@ -149,7 +152,8 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   ) {
     return 0;
   }
-  //save number
+
+  //save a number on database
   const res = await apiNumber.createNumber(numbeToSave);
   console.log(res);
   if (res.status == 200) {
@@ -157,10 +161,12 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
     let span = document.createElement("span");
     let txt = document.createTextNode(numbeToSave);
     span.appendChild(txt);
-    viewResults.insertBefore(span, viewResults.children[0]);
+    historyRoulette.insertBefore(span, historyRoulette.children[0]);
   }
   numberInput.value = "";
 });
+
+// get all numbers
 
 (async () => {
   let res = await apiNumber.getAllNumbers();
@@ -170,7 +176,9 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
       let span = document.createElement("span");
       let text = document.createTextNode(item.number);
       span.appendChild(text);
-      viewResults.appendChild(span);
+      historyRoulette.appendChild(span);
     });
   }
 })();
+
+algsContainer.appendChild(containerAlg);

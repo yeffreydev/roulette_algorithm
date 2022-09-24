@@ -27,6 +27,7 @@ const createNumber = async (n) => {
   });
   return {
     status: res.status,
+    data: await res.json(),
   };
 };
 

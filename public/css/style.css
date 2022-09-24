@@ -43,8 +43,6 @@ nav li a {
   background-color: #3452;
   padding: 10px;
 }
-.section::-webkit-scrollbar {
-}
 
 /* roulette  */
 .roulette-container {
@@ -125,6 +123,7 @@ nav li a {
   overflow-y: auto;
   position: absolute;
   background-color: #234;
+  display: flex;
 }
 .view-results.view-results_none {
   display: none;
@@ -137,4 +136,19 @@ nav li a {
   display: block;
   width: 100%;
   border-bottom: 1px solid white;
+}
+/* algorithms results  */
+.alg-results {
+  flex: 1;
+}
+.history-roulette {
+  width: 100px;
+}
+
+/* container alg  */
+.container-alg {
+  min-height: 100px;
+  background-color: #123;
+  width: 98%;
+  margin: 10px auto;
 }

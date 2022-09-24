@@ -9,15 +9,15 @@ const fileNameId: string = "numbers_rows_id";
 //create numbers
 const createNumbers = function (
   data: any,
-  cb: (err: string | boolean) => void
+  cb: (err: string | boolean, id: string | number | null) => void
 ) {
   storage.createFile(dirName, fileName, [{ id: 0, ...data }], (e) => {
     if (!e) {
       storage.createFile(dirName, fileNameId, 1, (e) => {
         if (!e) {
-          return cb(false);
+          return cb(false, null);
         } else {
-          return cb("Error creating file for numbers id");
+          return cb("Error creating file for numbers id", null);
         }
       });
     } else {
@@ -32,23 +32,30 @@ const createNumbers = function (
                     fileName,
                     [...d, { id, ...data }],
                     (e) => {
-                      if (!e) return cb(false);
-                      return cb("Errror updating file database numbers id");
+                      if (!e) return cb(false, id);
+                      return cb(
+                        "Errror updating file database numbers id",
+                        null
+                      );
                     }
                   );
                 } else {
-                  return cb("Error creating file database and id");
+                  return cb("Error creating file database and id", null);
                 }
               });
             } else {
               return cb(
-                e + "Error" + " [numberRows] database: error creating number"
+                e + "Error" + " [numberRows] database: error creating number",
+                null
               );
             }
           });
         } else {
           cb(
-            "Error reading, " + err + ", [numbersRos.ts]: error creating number"
+            "Error reading, " +
+              err +
+              ", [numbersRos.ts]: error creating number",
+            null
           );
         }
       });

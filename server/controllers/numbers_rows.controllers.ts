@@ -5,10 +5,10 @@ import { RequestHandler } from "express";
 const createNumbersRows: RequestHandler = function (req, res, next) {
   try {
     const number = req.body;
-    numbersRows.createNumbers(number, (e) => {
+    numbersRows.createNumbers(number, (e, id) => {
       if (!e) {
         res.status(200);
-        return res.send("created successfull");
+        return res.json({ ...number, id });
       }
       console.log(e);
       res.status(500);

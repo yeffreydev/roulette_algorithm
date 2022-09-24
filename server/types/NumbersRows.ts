@@ -1,7 +1,10 @@
 import { NumberI } from "./Number";
 
 export interface NumbersRowsI {
-  createNumbers: (data: any, cb: (err: string | boolean) => void) => void;
+  createNumbers: (
+    data: any,
+    cb: (err: string | boolean, id: string | number | null) => void
+  ) => void;
   readNumberById: (
     id: string | number,
     cb: (err: string | boolean, data: NumberI | null) => void
