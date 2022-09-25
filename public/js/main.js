@@ -1,6 +1,7 @@
 import helpers from "./modules/helpers.js";
 import apiNumber from "./api.js";
 import containerAlg from "./components.js";
+import algorithm from "./algorithm.js";
 
 //insert a specific position
 
@@ -115,9 +116,6 @@ for (let i = 1; i <= 37; i++) {
 
 roulette.appendChild(svgImg);
 
-const algorithm = {};
-algorithm.start = function () {};
-
 //functions on dom
 let buttonSubmitNumber = document.getElementById("submit_number_form");
 let numberInput = document.getElementById("input_results");
@@ -182,3 +180,5 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
 })();
 
 algsContainer.appendChild(containerAlg);
+
+algorithm;
