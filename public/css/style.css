@@ -38,10 +38,15 @@ nav li a {
   overflow-y: auto;
 }
 .section {
-  width: 80%;
+  width: 95%;
   margin: auto;
   background-color: #3452;
   padding: 10px;
+}
+@media screen and (min-width: 900px) {
+  .section {
+    width: 80%;
+  }
 }
 
 /* roulette  */
@@ -117,7 +122,6 @@ nav li a {
 
 .view-results {
   display: block;
-  border: 2px solid red;
   height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -129,7 +133,7 @@ nav li a {
   display: none;
 }
 
-.view-results span {
+.history-roulette span {
   color: white;
   font-weight: bolder;
   padding: 5px 10px;
@@ -140,8 +144,10 @@ nav li a {
 /* algorithms results  */
 .alg-results {
   flex: 1;
+  overflow-y: auto;
 }
 .history-roulette {
+  overflow-y: auto;
   width: 100px;
 }
 

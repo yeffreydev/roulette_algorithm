@@ -1,0 +1,22 @@
+.result-card {
+  background-color: #123;
+  width: 95%;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.result-card-title {
+  color: #def;
+}
+.container-numbers-prediction {
+  margin-top: 7px;
+  background-color: #000;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.number-prediction {
+  color: #def;
+  padding: 5px;
+}

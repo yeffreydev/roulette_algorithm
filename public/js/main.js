@@ -1,7 +1,7 @@
 import helpers from "./modules/helpers.js";
 import apiNumber from "./api.js";
-import containerAlg from "./components.js";
 import algorithm from "./algorithm.js";
+import resultCard from "./components/ResultCard.js";
 
 //insert a specific position
 
@@ -170,6 +170,8 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   let res = await apiNumber.getAllNumbers();
   console.log(res);
   if (res.status == 200) {
+    algorithm.getHotNumbersByLongRtoL(res.data.map((item) => item.number));
+    algorithm.getHotNumbersByLongLtoR(res.data.map((item) => item.number));
     res.data.reverse().map((item) => {
       let span = document.createElement("span");
       let text = document.createTextNode(item.number);
@@ -179,6 +181,19 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   }
 })();
 
-algsContainer.appendChild(containerAlg);
+// algsContainer.appendChild(containerAlg);
 
 algorithm;
+
+(() => {
+  for (let i = 0; i < 5; i++) {
+    let card = resultCard({
+      title: "title" + i,
+      numbers: [
+        34, 3, 3, 1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 534, 3, 3, 1, 3, 4, 534, 3, 3,
+        1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 5,
+      ],
+    });
+    algsContainer.appendChild(card);
+  }
+})();

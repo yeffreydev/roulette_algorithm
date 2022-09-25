@@ -130,15 +130,86 @@ algorithm.findIndexByLongLtoR = function (n, long) {
   return nIndex - (37 - long);
 };
 
-for (let f = 0; f <= 36; f++) {
-  console.log("number is: " + f);
-  for (let i = 0; i <= 37; i++) {
-    let n = algorithm.findNumberById(algorithm.findIndexByLongLtoR(f, i));
-    let nx2 = algorithm.findNumberById(algorithm.findIndexByLongRtoL(f, i));
-    console.log(
-      `left to right ${i} from ${f} is ${n} and right to left ${i} from ${f} is ${nx2}`
-    );
+//parse array save to only numbersArray
+
+algorithm.parseToArrayNumbers = function (array) {
+  return array.map((item) => item.number);
+};
+
+//best algorithm;
+algorithm.RightToLeftLongArray = function (array) {
+  if (array.length == 0) return [];
+  if (array.length == 1) return array;
+  let newArray = [];
+  for (let i = 0; i < array.length - 1; i++) {
+    let n = algorithm.findLeftLongIndexOnRoulette(array[i], array[i + 1]);
+    newArray.push(n);
   }
-}
+  return newArray;
+};
+
+algorithm.leftToRightLongArray = function (array) {
+  if (array.length == 0) return [];
+  if (array.length == 1) return array;
+  let newArray = [];
+  for (let i = 0; i < array.length - 1; i++) {
+    let n = algorithm.findRightLongIndexOnRoulette(array[i], array[i + 1]);
+    newArray.push(n);
+  }
+  return newArray;
+};
+
+//left is complement of right and right is complement of left
+algorithm.getHotNumbersByLongRtoL = function (array) {
+  let RtoL = algorithm.RightToLeftLongArray(array);
+  let hot = algorithm.getHotNumbers(RtoL, 10);
+  let newArray = [];
+  for (let i = 0; i < hot.length; i++) {
+    let index = algorithm.findIndexByLongRtoL(
+      array[array.length - 1],
+      hot[i].value
+    );
+    let number = {
+      number: algorithm.findNumberById(index),
+      valueRtoL: hot[i].value,
+      count: hot[i].count,
+    };
+    newArray.push(number);
+  }
+  console.log(newArray);
+  return newArray;
+};
+algorithm.getHotNumbersByLongLtoR = function (array) {
+  let LtoR = algorithm.leftToRightLongArray(array);
+  let hot = algorithm.getHotNumbers(LtoR, 10);
+  let newArray = [];
+  for (let i = 0; i < hot.length; i++) {
+    let index = algorithm.findIndexByLongLtoR(
+      array[array.length - 1],
+      hot[i].value
+    );
+    let number = {
+      number: algorithm.findNumberById(index),
+      valueLtoR: hot[i].value,
+      count: hot[i].count,
+    };
+    newArray.push(number);
+  }
+  console.log(newArray);
+  return newArray;
+};
+
+//algorithm 10 numbers in order from bets
+
+// for (let f = 0; f <= 36; f++) {
+//   console.log("number is: " + f);
+//   for (let i = 0; i <= 37; i++) {
+//     let n = algorithm.findNumberById(algorithm.findIndexByLongLtoR(f, i));
+//     let nx2 = algorithm.findNumberById(algorithm.findIndexByLongRtoL(f, i));
+//     console.log(
+//       `left to right ${i} from ${f} is ${n} and right to left ${i} from ${f} is ${nx2}`
+//     );
+//   }
+// }
 
 export default algorithm;

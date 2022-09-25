@@ -3,7 +3,15 @@ let orderArray = [
   16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26,
 ];
 let rouletteNumbers = orderArray.map((item, index) => {
-  return { id: index, value: item };
-});
+  if (item == 0) {
+    item = { id: index, value: item, color: "green" };
+  } else if (index % 2 == 0) {
+    item = { id: index, value: item, color: "red" };
+  } else {
+    item = { id: index, value: item, color: "black" };
+  }
 
+  return { id: item.id, value: item.value, color: item.color };
+});
+console.log(rouletteNumbers);
 export default rouletteNumbers;
