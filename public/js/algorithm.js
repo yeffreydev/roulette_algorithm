@@ -122,37 +122,13 @@ algorithm.findIndexByLongRtoL = function (n, long) {
   if (long >= nIndex) return 37 - (long - nIndex);
 };
 
-//if right to left calculate number
+//if left to right calculate number
 algorithm.findIndexByLongLtoR = function (n, long) {
   let nIndex = algorithm.findIndexOnRoulette(n);
   if (long == 0 || long == 37) return nIndex;
   if (nIndex + long <= 36) return nIndex + long;
   return nIndex - (37 - long);
 };
-
-let nx1 = algorithm.findLeftLongIndexOnRoulette(29, 18);
-let nx2 = algorithm.findRightLongIndexOnRoulette(29, 18);
-
-console.log(`the right to left is ${nx1}`);
-console.log(`the left to right is ${nx2}`);
-
-//calculate number segun algorithm right to left
-let n1 = algorithm.findIndexByLongRtoL(26, 35);
-//calculate number segun algorithm left to right
-let n2 = algorithm.findIndexByLongRtoL(20, 1);
-console.log(algorithm.findIndexOnRoulette(26));
-// console.log(algorithm.findNumberById(n1));
-// console.log(algorithm.findNumberById(n2));
-console.log("-----");
-
-n1 = algorithm.findIndexByLongLtoR(19, 1);
-n2 = algorithm.findIndexByLongLtoR(20, 1);
-// console.log(algorithm.findNumberById(n1));
-// console.log(algorithm.findNumberById(n2));
-
-//recorrer numeros
-
-console.log("index from 20 is: ", algorithm.findIndexOnRoulette(20));
 
 for (let f = 0; f <= 36; f++) {
   console.log("number is: " + f);
