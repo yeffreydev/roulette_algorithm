@@ -160,9 +160,9 @@ algorithm.leftToRightLongArray = function (array) {
 };
 
 //left is complement of right and right is complement of left
-algorithm.getHotNumbersByLongRtoL = function (array) {
+algorithm.getHotNumbersByLongRtoL = function (array, n) {
   let RtoL = algorithm.RightToLeftLongArray(array);
-  let hot = algorithm.getHotNumbers(RtoL, 10);
+  let hot = algorithm.getHotNumbers(RtoL, n);
   let newArray = [];
   for (let i = 0; i < hot.length; i++) {
     let index = algorithm.findIndexByLongRtoL(
@@ -171,17 +171,16 @@ algorithm.getHotNumbersByLongRtoL = function (array) {
     );
     let number = {
       number: algorithm.findNumberById(index),
-      valueRtoL: hot[i].value,
+      longRtoL: hot[i].value,
       count: hot[i].count,
     };
     newArray.push(number);
   }
-  console.log(newArray);
   return newArray;
 };
-algorithm.getHotNumbersByLongLtoR = function (array) {
+algorithm.getHotNumbersByLongLtoR = function (array, n) {
   let LtoR = algorithm.leftToRightLongArray(array);
-  let hot = algorithm.getHotNumbers(LtoR, 10);
+  let hot = algorithm.getHotNumbers(LtoR, n);
   let newArray = [];
   for (let i = 0; i < hot.length; i++) {
     let index = algorithm.findIndexByLongLtoR(
@@ -190,12 +189,11 @@ algorithm.getHotNumbersByLongLtoR = function (array) {
     );
     let number = {
       number: algorithm.findNumberById(index),
-      valueLtoR: hot[i].value,
+      longLtoR: hot[i].value,
       count: hot[i].count,
     };
     newArray.push(number);
   }
-  console.log(newArray);
   return newArray;
 };
 

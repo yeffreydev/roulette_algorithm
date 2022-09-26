@@ -170,8 +170,16 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   let res = await apiNumber.getAllNumbers();
   console.log(res);
   if (res.status == 200) {
-    algorithm.getHotNumbersByLongRtoL(res.data.map((item) => item.number));
-    algorithm.getHotNumbersByLongLtoR(res.data.map((item) => item.number));
+    let array1 = algorithm.getHotNumbersByLongRtoL(
+      res.data.map((item) => item.number),
+      3
+    );
+    let array2 = algorithm.getHotNumbersByLongLtoR(
+      res.data.map((item) => item.number),
+      3
+    );
+    console.log(array1);
+    console.log(array2);
     res.data.reverse().map((item) => {
       let span = document.createElement("span");
       let text = document.createTextNode(item.number);
@@ -181,10 +189,14 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   }
 })();
 
-// algsContainer.appendChild(containerAlg);
+function renderNumbersByMean() {
+  let card = resultCard({ title: "render number by Mean", numbers: [] });
+  algsContainer.appendChild(card);
+}
+function renderNumbersByMode3HotLong() {}
+function renderNumbersByMode10HotLong() {}
 
-algorithm;
-
+renderNumbersByMean();
 (() => {
   for (let i = 0; i < 5; i++) {
     let card = resultCard({
