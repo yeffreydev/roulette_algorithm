@@ -3,6 +3,9 @@ import apiNumber from "./api.js";
 import algorithm from "./algorithm.js";
 import resultCard from "./components/ResultCard.js";
 
+//numbers
+let numbers = [];
+
 //insert a specific position
 
 Element.prototype.insertChildAtIndex = function (child, index) {
@@ -155,11 +158,14 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
   const res = await apiNumber.createNumber(numbeToSave);
   console.log(res);
   if (res.status == 200) {
+    renderAllAlgorithms();
+    numbers.push({ id: 0, number: numbeToSave });
     savedNumbers.push(numbeToSave);
     let span = document.createElement("span");
     let txt = document.createTextNode(numbeToSave);
     span.appendChild(txt);
     historyRoulette.insertBefore(span, historyRoulette.children[0]);
+    window.location.reload();
   }
   numberInput.value = "";
 });
@@ -168,18 +174,9 @@ buttonSubmitNumber.addEventListener("submit", async (e) => {
 
 (async () => {
   let res = await apiNumber.getAllNumbers();
-  console.log(res);
   if (res.status == 200) {
-    let array1 = algorithm.getHotNumbersByLongRtoL(
-      res.data.map((item) => item.number),
-      3
-    );
-    let array2 = algorithm.getHotNumbersByLongLtoR(
-      res.data.map((item) => item.number),
-      3
-    );
-    console.log(array1);
-    console.log(array2);
+    numbers = res.data;
+    renderAllAlgorithms();
     res.data.reverse().map((item) => {
       let span = document.createElement("span");
       let text = document.createTextNode(item.number);
@@ -193,19 +190,56 @@ function renderNumbersByMean() {
   let card = resultCard({ title: "render number by Mean", numbers: [] });
   algsContainer.appendChild(card);
 }
-function renderNumbersByMode3HotLong() {}
-function renderNumbersByMode10HotLong() {}
+function renderNumbersByMode3HotLong() {
+  let array = algorithm.getHotNumbersByLongRtoL(
+    numbers.map((item) => item.number),
+    10
+  );
+  let card = resultCard({
+    title: "render numbers by 10 hot long",
+    numbers: array.map((item) => item.number),
+  });
+  algsContainer.appendChild(card);
+}
+function renderNumbersByLast40() {
+  let aNumbers = numbers.map((item) => item.number);
+  let cNumbers = algorithm.getLimitELements(aNumbers.reverse(), 40);
+  console.log(cNumbers);
+  let hotArray = algorithm.getHotNumbersByLongLtoR(cNumbers, 30);
 
-renderNumbersByMean();
-(() => {
-  for (let i = 0; i < 5; i++) {
-    let card = resultCard({
-      title: "title" + i,
-      numbers: [
-        34, 3, 3, 1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 534, 3, 3, 1, 3, 4, 534, 3, 3,
-        1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 5,
-      ],
-    });
-    algsContainer.appendChild(card);
-  }
-})();
+  let card = resultCard({
+    title: "render numbers by last 40 => 10 numbers",
+    numbers: hotArray.map((item) => item.number),
+  });
+  algsContainer.appendChild(card);
+}
+function renderNumbersByMode10HotLong() {
+  let array = algorithm.getHotNumbersByLongRtoL(
+    numbers.map((item) => item.number),
+    37
+  );
+  console.log(array);
+  let card = resultCard({
+    title: "render numbers by 10 hot long",
+    numbers: array.map((item) => item.number),
+  });
+  algsContainer.appendChild(card);
+}
+function renderAllAlgorithms() {
+  renderNumbersByMean();
+  renderNumbersByMode3HotLong();
+  renderNumbersByLast40();
+  renderNumbersByMode10HotLong();
+}
+// (() => {
+//   for (let i = 0; i < 5; i++) {
+//     let card = resultCard({
+//       title: "title" + i,
+//       numbers: [
+//         34, 3, 3, 1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 534, 3, 3, 1, 3, 4, 534, 3, 3,
+//         1, 3, 4, 5, 34, 3, 3, 1, 3, 4, 5,
+//       ],
+//     });
+//     algsContainer.appendChild(card);
+//   }
+// })();

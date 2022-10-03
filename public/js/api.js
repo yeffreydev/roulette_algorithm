@@ -1,4 +1,4 @@
-let api = "http://192.168.0.6:4000/api/numbers";
+let api = "http://localhost:4000/api/numbers";
 
 const getNumber = async (id) => {
   const res = await fetch(`${api}/${id}`);

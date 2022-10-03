@@ -130,7 +130,7 @@ nav li a {
   display: flex;
 }
 .view-results.view-results_none {
-  display: none;
+  display: flex;
 }
 
 .history-roulette span {
